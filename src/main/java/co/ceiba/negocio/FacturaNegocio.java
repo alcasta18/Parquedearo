@@ -6,12 +6,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.springframework.stereotype.Component;
+
 import co.ceiba.dominio.Factura;
 import co.ceiba.dominio.Parqueadero;
 import co.ceiba.dominio.Vehiculo;
 import co.ceiba.excepcion.EntradaDeVehiculoExcepcion;
 import co.ceiba.interfaces.IFacturaNegocio;
-
+@Component("FacturaNegocio")
 public class FacturaNegocio implements IFacturaNegocio{
 
 	public int minutosHoraEntradaAEntero(String horaEntrada) {

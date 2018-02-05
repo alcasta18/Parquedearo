@@ -1,7 +1,10 @@
 package co.ceiba.negocio;
 
+import org.springframework.stereotype.Component;
+
 import co.ceiba.interfaces.IVehiculoNegocio;
 
+@Component("VehiculoNegocio")
 public class VehiculoNegocio implements IVehiculoNegocio{
 
 	@Override

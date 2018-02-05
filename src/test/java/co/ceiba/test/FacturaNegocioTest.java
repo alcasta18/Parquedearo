@@ -66,7 +66,7 @@ public class FacturaNegocioTest {
 		assertEquals(10,resultado);
 	}
 	
-/*	@Test
+	@Test
 	public void empezarFacturaTest() {
 		//arrange
 		Parqueadero parqueadero = new Parqueadero(1,20,10);
@@ -80,14 +80,14 @@ public class FacturaNegocioTest {
 		facturaN.empezarFactura(parqueadero, parqueaderoN, vehiculo, factura);
 		//assert
 		assertNotNull(factura.getFechaEntrada());
-		assertNotNull(factura.getVehiculo());
+		assertNotNull(factura.getPlaca());
 		assertNotNull(factura.getHoraEntrada());
-	}*/
+	}
 		
 	@Test(expected = EntradaDeVehiculoExcepcion.class)
 	public void empezarFacturaTest2() {
 		//arrange
-		Parqueadero parqueadero = new Parqueadero(1,20,10);
+		Parqueadero parqueadero = new Parqueadero(1,0,10);
 		ParqueaderoNegocio parqueaderoN = new ParqueaderoNegocio();
 		Vehiculo vehiculo = new Vehiculo("Afewfe","Carro",2000);
 		Factura factura = new Factura();

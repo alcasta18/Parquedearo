@@ -1,7 +1,9 @@
 package co.ceiba.negocio;
 
-import co.ceiba.interfaces.IParqueaderoNegocio;
+import org.springframework.stereotype.Component;
 
+import co.ceiba.interfaces.IParqueaderoNegocio;
+@Component("parqueaderoNegocio")
 public class ParqueaderoNegocio implements IParqueaderoNegocio{
 	public static final String CARRO = "Carro";
 	@Override
