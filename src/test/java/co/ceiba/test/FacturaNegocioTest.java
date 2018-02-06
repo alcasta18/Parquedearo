@@ -1,12 +1,15 @@
 package co.ceiba.test;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Date;
 import org.junit.Test;
+import org.mockito.Mockito;
 
+import co.ceiba.CalendarioDia;
 import co.ceiba.dominio.Factura;
 import co.ceiba.dominio.Parqueadero;
 import co.ceiba.dominio.Vehiculo;
@@ -73,9 +76,10 @@ public class FacturaNegocioTest {
 		ParqueaderoNegocio parqueaderoN = new ParqueaderoNegocio();
 		Vehiculo vehiculo = new Vehiculo("Afewfe","Carro",2000);
 		Factura factura = new Factura();
-		Calendar c = new GregorianCalendar();
-		c.set(2018, 1, 4, 7, 30);
-		factura.setFechaEntrada(c.getTime());
+		Calendar calendario = new GregorianCalendar(2018, 1, 5, 7, 10);
+		CalendarioDia fecha = Mockito.mock(CalendarioDia.class);
+		Mockito.when(fecha.getFecha()).thenReturn(calendario.getTime());
+		factura.setFechaEntrada(fecha.getFecha());
 		//act
 		facturaN.empezarFactura(parqueadero, parqueaderoN, vehiculo, factura);
 		//assert
@@ -91,6 +95,21 @@ public class FacturaNegocioTest {
 		ParqueaderoNegocio parqueaderoN = new ParqueaderoNegocio();
 		Vehiculo vehiculo = new Vehiculo("Afewfe","Carro",2000);
 		Factura factura = new Factura();
+		//act
+		facturaN.empezarFactura(parqueadero, parqueaderoN, vehiculo, factura);
+	}
+	
+	@Test(expected = EntradaDeVehiculoExcepcion.class)
+	public void empezarFacturaTest3() {
+		//arrange
+		Parqueadero parqueadero = new Parqueadero(1,20,10);
+		ParqueaderoNegocio parqueaderoN = new ParqueaderoNegocio();
+		Vehiculo vehiculo = new Vehiculo("Afewfe","Carro",2000);
+		Factura factura = new Factura();
+		Calendar calendario = new GregorianCalendar(2018, 1, 6, 7, 10);
+		CalendarioDia fecha = Mockito.mock(CalendarioDia.class);
+		Mockito.when(fecha.getFecha()).thenReturn(calendario.getTime());
+		factura.setFechaEntrada(fecha.getFecha());
 		//act
 		facturaN.empezarFactura(parqueadero, parqueaderoN, vehiculo, factura);
 	}

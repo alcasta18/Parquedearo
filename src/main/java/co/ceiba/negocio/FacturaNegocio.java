@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 
 import org.springframework.stereotype.Component;
 
+import co.ceiba.CalendarioDia;
 import co.ceiba.dominio.Factura;
 import co.ceiba.dominio.Parqueadero;
 import co.ceiba.dominio.Vehiculo;
@@ -50,10 +51,11 @@ public class FacturaNegocio implements IFacturaNegocio{
 	}
 	
 	public void empezarFactura(Parqueadero parqueadero,ParqueaderoNegocio parqueaderoN,Vehiculo vehiculo,Factura factura) {
-		Calendar calendario = new GregorianCalendar();
-		if(parqueaderoN.hayCupo(vehiculo.getTipo(),parqueadero.getCapacidadCarros(),
-				parqueadero.getCapacidadMotos())&&(parqueaderoN.vehiculoPuedeEntrar
-						(vehiculo.getPlaca(),calendario.get(Calendar.DAY_OF_WEEK)))) {
+		Calendar calendario = new GregorianCalendar();		
+		int dia =buscarDia(factura.getFechaEntrada());
+		if((parqueaderoN.hayCupo(vehiculo.getTipo(),parqueadero.getCapacidadCarros(),
+				parqueadero.getCapacidadMotos()))&&(parqueaderoN.vehiculoPuedeEntrar
+						(vehiculo.getPlaca(),dia))) {
 			parqueaderoN.ingresarVehiculo(vehiculo.getTipo(), parqueadero.getCapacidadCarros(), 
 					parqueadero.getCapacidadMotos());
 			factura.setFechaEntrada(calendario.getTime());
@@ -64,6 +66,17 @@ public class FacturaNegocio implements IFacturaNegocio{
 			throw new EntradaDeVehiculoExcepcion("El vehiculo no pudo ser ingresado en el parqueadero");
 	}
 	
+	public int buscarDia(Date fechaEntrada) {
+		if(fechaEntrada == null)
+			return java.util.Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+		else {
+			Calendar calendario = new GregorianCalendar();
+			calendario.setTime(fechaEntrada);
+			return calendario.get(Calendar.DAY_OF_WEEK);
+		}
+		
+	}
+
 	public void terminarFactura(Parqueadero parqueadero, ParqueaderoNegocio parqueaderoN,Vehiculo vehiculo,VehiculoNegocio vehiculoN,Factura factura) {
 		Calendar calendario = new GregorianCalendar();
 		factura.setFechaSalida(calendario.getTime());

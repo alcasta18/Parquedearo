@@ -16,7 +16,6 @@ public class Factura {
 	
 	public Factura() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 
