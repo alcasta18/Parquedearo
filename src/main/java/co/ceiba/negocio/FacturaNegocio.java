@@ -8,7 +8,6 @@ import java.util.GregorianCalendar;
 
 import org.springframework.stereotype.Component;
 
-import co.ceiba.CalendarioDia;
 import co.ceiba.dominio.Factura;
 import co.ceiba.dominio.Parqueadero;
 import co.ceiba.dominio.Vehiculo;
