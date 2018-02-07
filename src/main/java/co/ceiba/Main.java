@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages= {"co.ceiba.services"})
+@ComponentScan({"co.ceiba.rest"})
 @ComponentScan({"co.ceiba.negocio"})
 @EntityScan("co.ceiba.entity")
 public class Main {

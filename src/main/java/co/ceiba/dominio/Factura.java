@@ -2,6 +2,9 @@ package co.ceiba.dominio;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+
+@Component("Factura")
 public class Factura {
 	private int facturaId;
 	private Date fechaEntrada;

@@ -1,4 +1,4 @@
-package co.ceiba.services;
+package co.ceiba.rest;
 
 
 
@@ -40,13 +40,11 @@ public class ParqueaderoService {
 		return repositorioParqueadero.findAll();
 	}
 	
-	@PostMapping("/borrar")
-	public void borrar(@RequestBody int parqueaderoId) {
-		repositorioParqueadero.delete(parqueaderoId);
-	}
-	
+
 	@RequestMapping("/consultar")
 	public Parqueadero consultar(@RequestBody String parqueaderoId) {
 		return modelMapper.map(repositorioParqueadero.findOne(parqueaderoId),Parqueadero.class);
 	}
+	
+	
 }

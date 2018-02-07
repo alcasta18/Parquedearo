@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import co.ceiba.entity.VehiculoEntity;
 
 public interface RepositorioVehiculo extends JpaRepository<VehiculoEntity, Serializable> {
-	@Query("select v from VehiculoEntity v where v = ?1")
+	@Query("select v from VehiculoEntity v where v.placa = ?1")
 	  VehiculoEntity findByPlaca(String placa);
 }

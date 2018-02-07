@@ -1,4 +1,4 @@
-package co.ceiba.services;
+package co.ceiba.rest;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +14,9 @@ import co.ceiba.dominio.Factura;
 import co.ceiba.dominio.Parqueadero;
 import co.ceiba.dominio.Vehiculo;
 import co.ceiba.entity.FacturaEntity;
-import co.ceiba.negocio.FacturaNegocio;
 import co.ceiba.negocio.ParqueaderoNegocio;
 import co.ceiba.negocio.VehiculoNegocio;
+import co.ceiba.negocio.Vigilante;
 import co.ceiba.repositorio.RepositorioFactura;
 import co.ceiba.repositorio.RepositorioParqueadero;
 import co.ceiba.repositorio.RepositorioVehiculo;
@@ -37,30 +37,44 @@ public class VigilanteService {
 	@Autowired
 	private RepositorioParqueadero repositorioParqueadero;
 	@Autowired
-	@Qualifier("parqueaderoNegocio")
+	@Qualifier("ParqueaderoNegocio")
 	private ParqueaderoNegocio parqueaderoN;
 	@Autowired
-	@Qualifier("FacturaNegocio")
-	private FacturaNegocio facturaN;
+	@Qualifier("Vigilante")
+	private Vigilante vigilante;
 	@Autowired
 	@Qualifier("VehiculoNegocio")
 	private VehiculoNegocio vehiculoN;
 	
 	
 	@PostMapping("/ingresar/vehiculo")
-	public void ingresarVehiculo(@RequestBody Factura factura,String parqueaderoId,String placa) {
-		Vehiculo vehiculo = modelMapper.map(vehiculoRepository.findByPlaca(placa),Vehiculo.class);
-		Parqueadero parqueadero = modelMapper.map(repositorioParqueadero.findOne(parqueaderoId),Parqueadero.class);
-		facturaN.empezarFactura(parqueadero, parqueaderoN, vehiculo, factura);
-		facturaEntity = modelMapper.map(factura, FacturaEntity.class);
-		facturaRepositorio.save(facturaEntity);
+	public void ingresarVehiculo(@RequestBody Factura factura,int parqueaderoId) {
+		try{
+			Vehiculo vehiculo = modelMapper.map(vehiculoRepository.findByPlaca(factura.getPlaca()),Vehiculo.class);
+			Parqueadero parqueadero = modelMapper.map(repositorioParqueadero.findOne(parqueaderoId),Parqueadero.class);
+			vigilante.empezarFactura(parqueadero, parqueaderoN, vehiculo, factura);
+			facturaEntity = modelMapper.map(factura, FacturaEntity.class);
+			facturaRepositorio.save(facturaEntity);
+		}
+		catch(Exception e) {
+			e.getMessage();
+		}
+		
 	}
 	
 	@PostMapping("sacar/vehiculo")
-	public void sacarVehiculo(@RequestBody int facturaId,String parqueaderoId,String placa) {
-		Factura factura = modelMapper.map(facturaRepositorio.findOne(facturaId),Factura.class);
-		Vehiculo vehiculo = modelMapper.map(vehiculoRepository.findByPlaca(placa),Vehiculo.class);
-		Parqueadero parqueadero = modelMapper.map(repositorioParqueadero.findOne(parqueaderoId),Parqueadero.class);
-		facturaN.terminarFactura(parqueadero, parqueaderoN, vehiculo, vehiculoN, factura);
+	public void sacarVehiculo(@RequestBody int facturaId,String parqueaderoId) {
+		try {
+			Factura factura = modelMapper.map(facturaRepositorio.findOne(facturaId),Factura.class);
+			Vehiculo vehiculo = modelMapper.map(vehiculoRepository.findByPlaca(factura.getPlaca()),Vehiculo.class);
+			Parqueadero parqueadero = modelMapper.map(repositorioParqueadero.findOne(parqueaderoId),Parqueadero.class);
+			vigilante.terminarFactura(parqueadero, parqueaderoN, vehiculo, vehiculoN, factura);
+			facturaEntity = modelMapper.map(factura, FacturaEntity.class);
+			facturaRepositorio.save(facturaEntity);
+		}
+		catch(Exception e) {
+			e.getMessage();
+		}
+	
 	}
 }

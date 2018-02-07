@@ -3,7 +3,7 @@ package co.ceiba.negocio;
 import org.springframework.stereotype.Component;
 
 import co.ceiba.interfaces.IParqueaderoNegocio;
-@Component("parqueaderoNegocio")
+@Component("ParqueaderoNegocio")
 public class ParqueaderoNegocio implements IParqueaderoNegocio{
 	public static final String CARRO = "Carro";
 	@Override
