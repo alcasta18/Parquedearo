@@ -4,13 +4,22 @@ import static org.junit.Assert.*;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import co.ceiba.Main;
+import co.ceiba.dominio.Parqueadero;
 import co.ceiba.interfaces.IParqueaderoNegocio;
 import co.ceiba.negocio.ParqueaderoNegocio;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes=Main.class)
 public class ParqueaderoNegocioTest {
 	
-	private IParqueaderoNegocio parqueadero = new ParqueaderoNegocio();
+	@Autowired
+	private ParqueaderoNegocio parqueaderoN;
 	
 	@Test
 	public void vehiculoPuedeEntrarTest() {
@@ -18,7 +27,7 @@ public class ParqueaderoNegocioTest {
 		int dia = 1;
 		String placa = "AAA333";
 		//act
-		boolean mensajeDelParqueadero = parqueadero.vehiculoPuedeEntrar(placa, dia);
+		boolean mensajeDelParqueadero = parqueaderoN.vehiculoPuedeEntrar(placa, dia);
 		//assert
 		Assert.assertTrue(mensajeDelParqueadero);
 	}
@@ -29,7 +38,7 @@ public class ParqueaderoNegocioTest {
 		int dia = 1;
 		String placa = "BAA333";
 		//act
-		boolean mensajeDelParqueadero = parqueadero.vehiculoPuedeEntrar(placa, dia);
+		boolean mensajeDelParqueadero = parqueaderoN.vehiculoPuedeEntrar(placa, dia);
 		//assert
 		Assert.assertTrue(mensajeDelParqueadero);
 	}
@@ -40,7 +49,7 @@ public class ParqueaderoNegocioTest {
 		int dia = 3;
 		String placa = "AAA333";
 		//act
-		boolean mensajeDelParqueadero = parqueadero.vehiculoPuedeEntrar(placa,dia);
+		boolean mensajeDelParqueadero = parqueaderoN.vehiculoPuedeEntrar(placa,dia);
 		//assert
 		Assert.assertFalse(mensajeDelParqueadero);
 	}
@@ -51,7 +60,7 @@ public class ParqueaderoNegocioTest {
 		int dia = 2;
 		String placa = "aAA333";
 		//act
-		boolean mensajeDelParqueadero = parqueadero.vehiculoPuedeEntrar(placa, dia);
+		boolean mensajeDelParqueadero = parqueaderoN.vehiculoPuedeEntrar(placa, dia);
 		//assert
 		Assert.assertTrue(mensajeDelParqueadero);
 	}
@@ -61,7 +70,7 @@ public class ParqueaderoNegocioTest {
 		//arrange
 		String tipo = "Carro";
 		//act
-		boolean hayCupo = parqueadero.hayCupo(tipo,1,0);
+		boolean hayCupo = parqueaderoN.hayCupo(tipo,1,0);
 		//assert
 		Assert.assertTrue(hayCupo);
 	}
@@ -71,7 +80,7 @@ public class ParqueaderoNegocioTest {
 		//arrange
 		String tipo = "Moto";
 		//act
-		boolean hayCupo = parqueadero.hayCupo(tipo,1,0);
+		boolean hayCupo = parqueaderoN.hayCupo(tipo,1,0);
 		//assert
 		Assert.assertFalse(hayCupo);
 	}
@@ -81,7 +90,7 @@ public class ParqueaderoNegocioTest {
 		//arrange
 		String tipo = "Carro";
 		//act
-		boolean hayCupo = parqueadero.hayCupo(tipo,0,0);
+		boolean hayCupo = parqueaderoN.hayCupo(tipo,0,0);
 		//assert
 		Assert.assertFalse(hayCupo);
 	}
@@ -91,7 +100,7 @@ public class ParqueaderoNegocioTest {
 		//arrange
 		String tipo = "Carro";
 		//act
-		int resultado = parqueadero.ingresarVehiculo(tipo,1,0);
+		int resultado = parqueaderoN.ingresarVehiculo(tipo,1,0);
 		//assert
 		assertEquals(0,resultado);
 	}
@@ -101,7 +110,7 @@ public class ParqueaderoNegocioTest {
 		//arrange
 		String tipo = "Moto";
 		//act
-		int resultado = parqueadero.ingresarVehiculo(tipo,1,4);
+		int resultado = parqueaderoN.ingresarVehiculo(tipo,1,4);
 		//assert
 		assertEquals(3,resultado);
 	}
@@ -111,7 +120,7 @@ public class ParqueaderoNegocioTest {
 		//arrange
 		String tipo = "Moto";
 		//act
-		int resultado = parqueadero.ingresarVehiculo(tipo,1,0);
+		int resultado = parqueaderoN.ingresarVehiculo(tipo,1,0);
 		//assert
 		assertEquals(0,resultado);
 	}
@@ -124,7 +133,7 @@ public class ParqueaderoNegocioTest {
 		int capacidadCarros = 20;
 		int capacidadMotos = 10;
 		//act
-		int capacidadActualizada = parqueadero.sacarVehiculo(tipo, precioParqueo, capacidadCarros, capacidadMotos);
+		int capacidadActualizada = parqueaderoN.sacarVehiculo(tipo, precioParqueo, capacidadCarros, capacidadMotos);
 		//assert
 		assertEquals(19,capacidadActualizada);
 	}
@@ -137,7 +146,7 @@ public class ParqueaderoNegocioTest {
 		int capacidadCarros = 20;
 		int capacidadMotos = 10;
 		//act
-		int capacidadActualizada = parqueadero.sacarVehiculo(tipo, precioParqueo, capacidadCarros, capacidadMotos);
+		int capacidadActualizada = parqueaderoN.sacarVehiculo(tipo, precioParqueo, capacidadCarros, capacidadMotos);
 		//assert
 		assertEquals(20,capacidadActualizada);
 	}
@@ -150,7 +159,7 @@ public class ParqueaderoNegocioTest {
 		int capacidadCarros = 20;
 		int capacidadMotos = 10;
 		//act
-		int capacidadActualizada = parqueadero.sacarVehiculo(tipo, precioParqueo, capacidadCarros, capacidadMotos);
+		int capacidadActualizada = parqueaderoN.sacarVehiculo(tipo, precioParqueo, capacidadCarros, capacidadMotos);
 		//assert
 		assertEquals(9,capacidadActualizada);
 	}
@@ -163,8 +172,17 @@ public class ParqueaderoNegocioTest {
 		int capacidadCarros = 20;
 		int capacidadMotos = 10;
 		//act
-		int capacidadActualizada = parqueadero.sacarVehiculo(tipo, precioParqueo, capacidadCarros, capacidadMotos);
+		int capacidadActualizada = parqueaderoN.sacarVehiculo(tipo, precioParqueo, capacidadCarros, capacidadMotos);
 		//assert
 		assertEquals(10,capacidadActualizada);
+	}
+	
+	@Test
+	public void obtenerParqueaderoTest() {
+		Parqueadero parqueadero = parqueaderoN.obtenerParqueadero(1);
+		Parqueadero parqueadero2 = new Parqueadero(1,20,10);
+		assertEquals(parqueadero2.getParqueaderoId(),parqueadero.getParqueaderoId());
+		assertEquals(parqueadero2.getCapacidadCarros(),parqueadero.getCapacidadCarros());
+		assertEquals(parqueadero2.getCapacidadMotos(),parqueadero.getCapacidadMotos());
 	}
 }

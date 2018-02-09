@@ -1,6 +1,8 @@
 package co.ceiba.negocio;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import org.springframework.stereotype.Component;
 @Component("CalculadorDeHoras")
@@ -36,5 +38,23 @@ public class CalculadorDeHoras {
 	public String obtenerHora(String fechaCompleta) {
 		String [] obtenerHora = fechaCompleta.split(" ");
 		return obtenerHora[3];
+	}
+	
+	public int diferenciaDeHorasConCalendar(Date fechaEntrada,Date fechaSalida) {
+		int diasEnHoras = diasAHoras(fechaEntrada,fechaSalida);
+		String horaEntrada = obtenerHoraConCalendar(fechaEntrada);
+		String horaSalida = obtenerHoraConCalendar(fechaSalida);		
+		int minutosEntrada = minutosHoraEntradaAEntero(horaEntrada);		
+		int minutosSalida = minutosHoraSalidaAEntero(horaSalida);
+		if(minutosEntrada==minutosSalida)
+			return diasEnHoras;
+		else
+			return diasEnHoras+1;		
+	}
+	
+	public String obtenerHoraConCalendar(Date fecha) {
+		Calendar c= new GregorianCalendar();
+		c.setTime(fecha);
+		return String.valueOf(c.get(Calendar.HOUR_OF_DAY)).concat(":").concat(String.valueOf(c.get(Calendar.MINUTE)));
 	}
 }

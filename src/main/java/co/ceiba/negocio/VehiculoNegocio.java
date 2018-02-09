@@ -1,12 +1,24 @@
 package co.ceiba.negocio;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import co.ceiba.dominio.Vehiculo;
+import co.ceiba.entity.VehiculoEntity;
 import co.ceiba.interfaces.IVehiculoNegocio;
+import co.ceiba.repositorio.RepositorioVehiculo;
 
-@Component("VehiculoNegocio")
+@Service("VehiculoNegocio")
+@EnableJpaRepositories("co.ceiba.repositorio")
+
 public class VehiculoNegocio implements IVehiculoNegocio{
-
+	
+	@Autowired
+	private RepositorioVehiculo vehiculoReposotory;
+	
 	@Override
 	public int calcularPrecio(int numHoras, int cilindraje, String tipo) {
 		int dias = 0;
@@ -37,5 +49,15 @@ public class VehiculoNegocio implements IVehiculoNegocio{
 			return (dias*8000)+(horas*1000);
 		else
 			return (dias*4000)+(horas*500);
-	}	
+	}
+
+	public Vehiculo obtenerVehiculo(String placa) {
+		ModelMapper modelMapper = new ModelMapper();
+		return modelMapper.map(vehiculoReposotory.findByPlaca(placa),Vehiculo.class);
+	}
+	
+	public void guardarVehiculoEnBD(Vehiculo vehiculo) {
+		ModelMapper modelMapper = new ModelMapper();
+		vehiculoReposotory.save(modelMapper.map(vehiculo, VehiculoEntity.class));
+	}
 }

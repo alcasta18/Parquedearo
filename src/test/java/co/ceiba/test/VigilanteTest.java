@@ -1,37 +1,43 @@
 package co.ceiba.test;
 
+
 import static org.junit.Assert.*;
+
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import co.ceiba.CalendarioDia;
+import co.ceiba.Main;
 import co.ceiba.dominio.Factura;
 import co.ceiba.dominio.Parqueadero;
 import co.ceiba.dominio.Vehiculo;
 import co.ceiba.excepcion.EntradaDeVehiculoExcepcion;
 import co.ceiba.negocio.ParqueaderoNegocio;
+import co.ceiba.negocio.SolicitudEntradaVehiculo;
+import co.ceiba.negocio.SolicitudSalidaVehiculo;
 import co.ceiba.negocio.VehiculoNegocio;
 import co.ceiba.negocio.Vigilante;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes=Main.class)
+
 public class VigilanteTest {
-	private Vigilante vigilante = new Vigilante();
+	@Autowired
+	private Vigilante vigilante;
+	
 	@Test
 	public void empezarFacturaTest() {
 		//arrange
-		Parqueadero parqueadero = new Parqueadero(1,20,10);
-		Vehiculo vehiculo = new Vehiculo("Afewfe","Carro",2000);
-		ParqueaderoNegocio parqueaderoN = new ParqueaderoNegocio();
-		Factura factura = new Factura();
-		Calendar calendario = new GregorianCalendar(2018, 1, 5, 7, 10);
-		CalendarioDia fecha = Mockito.mock(CalendarioDia.class);
-		Mockito.when(fecha.getFecha()).thenReturn(calendario.getTime());
-		factura.setFechaEntrada(fecha.getFecha());
+		SolicitudEntradaVehiculo solicitud = new SolicitudEntradaVehiculo(1,"CEI15A");
 		//act
-		vigilante.empezarFactura(parqueadero, parqueaderoN, vehiculo, factura);
+		Factura factura = vigilante.ingresarVehiculoAlParqueadero(solicitud);
 		//assert
 		assertNotNull(factura.getFechaEntrada());
 		assertNotNull(factura.getPlaca());
@@ -41,41 +47,27 @@ public class VigilanteTest {
 	@Test(expected = EntradaDeVehiculoExcepcion.class)
 	public void empezarFacturaTest2() {
 		//arrange
-		Parqueadero parqueadero = new Parqueadero(1,0,10);
-		Vehiculo vehiculo = new Vehiculo("Afewfe","Carro",2000);
-		Factura factura = new Factura();
-		ParqueaderoNegocio parqueaderoN = new ParqueaderoNegocio();
+		SolicitudEntradaVehiculo solicitud = new SolicitudEntradaVehiculo(2,"CEI15A");
 		//act
-		vigilante.empezarFactura(parqueadero, parqueaderoN, vehiculo, factura);
+		vigilante.ingresarVehiculoAlParqueadero(solicitud);
 	}
 	
 	@Test(expected = EntradaDeVehiculoExcepcion.class)
 	public void empezarFacturaTest3() {
 		//arrange
-		Parqueadero parqueadero = new Parqueadero(1,20,10);
-		Vehiculo vehiculo = new Vehiculo("Afewfe","Carro",2000);
-		Factura factura = new Factura();
-		ParqueaderoNegocio parqueaderoN = new ParqueaderoNegocio();
-		Calendar calendario = new GregorianCalendar(2018, 1, 6, 7, 10);
-		CalendarioDia fecha = Mockito.mock(CalendarioDia.class);
-		Mockito.when(fecha.getFecha()).thenReturn(calendario.getTime());
-		factura.setFechaEntrada(fecha.getFecha());
+		SolicitudEntradaVehiculo solicitud = new SolicitudEntradaVehiculo(1,"ACR18A");
+		Vigilante v = Mockito.mock(Vigilante.class);
+		Mockito.when(v.buscarDia(null)).thenReturn(2);
 		//act
-		vigilante.empezarFactura(parqueadero, parqueaderoN, vehiculo, factura);
+		vigilante.ingresarVehiculoAlParqueadero(solicitud);
 	}
 	
 	@Test
 	public void terminarFacturaTest() {
 		//arrange
-		Parqueadero parqueadero = new Parqueadero(1,20,10);
-		Vehiculo vehiculo = new Vehiculo("Afewfe","Carro",2000);
-		Factura factura = new Factura();
-		ParqueaderoNegocio parqueaderoN = new ParqueaderoNegocio();
-		VehiculoNegocio vehiculoN = new VehiculoNegocio();
-		Calendar calendario = new GregorianCalendar();
-		factura.setFechaEntrada(calendario.getTime());
+		SolicitudSalidaVehiculo solicitud = new SolicitudSalidaVehiculo(1,1);
 		//act
-		vigilante.terminarFactura(parqueadero,parqueaderoN,vehiculo, vehiculoN,factura);
+		Factura factura = vigilante.terminarFactura(solicitud);
 		//assert
 		assertNotNull(factura.getFechaSalida());
 		assertNotNull(factura.getHoraSalida());
