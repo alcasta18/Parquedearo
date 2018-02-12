@@ -15,9 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import co.ceiba.Main;
 import co.ceiba.dominio.Factura;
 import co.ceiba.excepcion.EntradaDeVehiculoExcepcion;
-import co.ceiba.negocio.SolicitudEntradaVehiculo;
-import co.ceiba.negocio.SolicitudSalidaVehiculo;
-import co.ceiba.negocio.Vigilante;
+import co.ceiba.servicios.SolicitudEntradaVehiculo;
+import co.ceiba.servicios.SolicitudSalidaVehiculo;
+import co.ceiba.servicios.Vigilante;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes=Main.class)

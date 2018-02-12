@@ -1,10 +1,12 @@
-package co.ceiba.negocio;
+package co.ceiba.servicios;
+
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
 
+import co.ceiba.dominio.ReporteEntradaDeVehiculo;
 import co.ceiba.dominio.Vehiculo;
 import co.ceiba.entity.VehiculoEntity;
 import co.ceiba.interfaces.IVehiculoNegocio;
@@ -26,6 +28,8 @@ public class VehiculoNegocio implements IVehiculoNegocio{
 	private static final int HORAS_TOPE_PARA_COBRAR_DIA = 9;
 	@Autowired
 	private RepositorioVehiculo vehiculoReposotory;
+	@Autowired
+	private Vigilante vigilante;
 	
 	
 	
@@ -70,4 +74,15 @@ public class VehiculoNegocio implements IVehiculoNegocio{
 		ModelMapper modelMapper = new ModelMapper();
 		vehiculoReposotory.save(modelMapper.map(vehiculo, VehiculoEntity.class));
 	}
+	
+	@Override
+	public ReporteEntradaDeVehiculo reporte (String placa) {
+		ReporteEntradaDeVehiculo reporte = new ReporteEntradaDeVehiculo();
+		Vehiculo vehiculo = obtenerVehiculo(placa);
+		reporte.setPlaca(placa);
+		reporte.setTipo(vehiculo.getTipo());
+		reporte.setFechaEntrada(vigilante.buscarFechaEntradaPorPlaca(placa));
+		return reporte;
+	}
+
 }

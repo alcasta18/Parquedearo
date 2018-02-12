@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.ceiba.dominio.Factura;
+import co.ceiba.dominio.ReporteEntradaDeVehiculo;
 import co.ceiba.entity.FacturaEntity;
-import co.ceiba.negocio.SolicitudEntradaVehiculo;
-import co.ceiba.negocio.SolicitudSalidaVehiculo;
-import co.ceiba.negocio.Vigilante;
+import co.ceiba.servicios.SolicitudEntradaVehiculo;
+import co.ceiba.servicios.SolicitudSalidaVehiculo;
+import co.ceiba.servicios.Vigilante;
 
 
 @RestController
@@ -45,4 +46,6 @@ public class VigilanteRest {
 	public Factura buscar(@PathVariable("facturaId") int facturaId) {
 		return vigilante.buscarFactura(facturaId);
 	}
+	
+
 }

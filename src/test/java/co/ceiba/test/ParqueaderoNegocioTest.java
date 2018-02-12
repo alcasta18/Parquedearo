@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import co.ceiba.Main;
 import co.ceiba.dominio.Parqueadero;
-import co.ceiba.negocio.ParqueaderoNegocio;
+import co.ceiba.servicios.ParqueaderoNegocio;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes=Main.class)

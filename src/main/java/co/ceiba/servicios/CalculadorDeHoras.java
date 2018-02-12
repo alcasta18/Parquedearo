@@ -1,4 +1,4 @@
-package co.ceiba.negocio;
+package co.ceiba.servicios;
 
 import java.util.Calendar;
 import java.util.Date;

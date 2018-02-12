@@ -1,4 +1,4 @@
-package co.ceiba.negocio;
+package co.ceiba.servicios;
 
 public class SolicitudEntradaVehiculo {
 	private int parqueaderoId;

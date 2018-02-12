@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import co.ceiba.Main;
-import co.ceiba.negocio.CalculadorDeHoras;
+import co.ceiba.servicios.CalculadorDeHoras;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes=Main.class)

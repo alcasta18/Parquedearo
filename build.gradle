@@ -44,9 +44,9 @@ jar {
   }
 }
 
-/*repositories {
+repositories {
   mavenCentral()
-}*/
+}
 
 test {
   // systemProperties 'property': 'value'

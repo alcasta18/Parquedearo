@@ -3,8 +3,8 @@ package co.ceiba.interfaces;
 import java.util.Date;
 
 import co.ceiba.dominio.Factura;
-import co.ceiba.negocio.SolicitudEntradaVehiculo;
-import co.ceiba.negocio.SolicitudSalidaVehiculo;
+import co.ceiba.servicios.SolicitudEntradaVehiculo;
+import co.ceiba.servicios.SolicitudSalidaVehiculo;
 
 public interface IVigilante {
 	public Factura ingresarVehiculoAlParqueadero(SolicitudEntradaVehiculo solicitud);

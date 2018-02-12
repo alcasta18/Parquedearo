@@ -1,6 +1,7 @@
-package co.ceiba.negocio;
+package co.ceiba.servicios;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import org.modelmapper.ModelMapper;
@@ -88,12 +89,12 @@ public class Vigilante implements IVigilante {
 	}
 
 
-
-
 	public Factura buscarFactura(int facturaId) {
 		return modelMapper.map(facturaRepo.findOne(facturaId),Factura.class);
 	}
-
-
+	
+	public Date buscarFechaEntradaPorPlaca(String placa) {
+		return facturaRepo.consultarFechaEntrada(placa);
+	}
 
 }

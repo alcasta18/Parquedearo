@@ -6,9 +6,4 @@ public class EntradaDeVehiculoExcepcion extends RuntimeException{
 	public EntradaDeVehiculoExcepcion(String message) {
 		super(message);
 	}
-
-
-	
-	
-	
 }

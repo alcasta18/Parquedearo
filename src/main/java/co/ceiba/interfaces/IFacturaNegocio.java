@@ -5,8 +5,8 @@ import java.util.Date;
 import co.ceiba.dominio.Factura;
 import co.ceiba.dominio.Parqueadero;
 import co.ceiba.dominio.Vehiculo;
-import co.ceiba.negocio.ParqueaderoNegocio;
-import co.ceiba.negocio.VehiculoNegocio;
+import co.ceiba.servicios.ParqueaderoNegocio;
+import co.ceiba.servicios.VehiculoNegocio;
 
 public interface IFacturaNegocio {	
 	public int minutosHoraEntradaAEntero(String horaEntrada);

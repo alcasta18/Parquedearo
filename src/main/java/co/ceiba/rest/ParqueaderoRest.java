@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.ceiba.dominio.Parqueadero;
 import co.ceiba.entity.ParqueaderoEntity;
-import co.ceiba.negocio.ParqueaderoNegocio;
+import co.ceiba.servicios.ParqueaderoNegocio;
 
 @RestController
 @RequestMapping("/api/parqueadero")

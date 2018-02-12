@@ -1,5 +1,6 @@
 package co.ceiba.rest;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.ceiba.dominio.ReporteEntradaDeVehiculo;
 import co.ceiba.dominio.Vehiculo;
-import co.ceiba.negocio.VehiculoNegocio;
+import co.ceiba.servicios.VehiculoNegocio;
 
 @RestController
 @RequestMapping("/api/vehiculo")
@@ -25,6 +27,11 @@ public class VehiculoRest {
 	@RequestMapping(value = "/placa={placa}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public Vehiculo buscar(@PathVariable("placa") String placa) {
 		return vehiculoN.obtenerVehiculo(placa);
+	}
+	
+	@RequestMapping(value = "/reporte/placa={placa}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ReporteEntradaDeVehiculo reporte(@PathVariable("placa") String placa) {
+		return vehiculoN.reporte(placa);
 	}
 	
 }
