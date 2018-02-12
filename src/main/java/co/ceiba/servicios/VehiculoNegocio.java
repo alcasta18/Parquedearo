@@ -1,6 +1,9 @@
 package co.ceiba.servicios;
 
 
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -26,6 +29,7 @@ public class VehiculoNegocio implements IVehiculoNegocio{
 	private static final int SOBRECOSTO_CILINDRAJE = 2000;
 	private static final int HORAS_DE_UN_DIA = 24;
 	private static final int HORAS_TOPE_PARA_COBRAR_DIA = 9;
+	private static final Log LOG = LogFactory.getLog(VehiculoNegocio.class);
 	@Autowired
 	private RepositorioVehiculo vehiculoReposotory;
 	@Autowired
@@ -66,8 +70,14 @@ public class VehiculoNegocio implements IVehiculoNegocio{
 	}
 
 	public Vehiculo obtenerVehiculo(String placa) {
+		Vehiculo vehiculo=null;
 		ModelMapper modelMapper = new ModelMapper();
-		return modelMapper.map(vehiculoReposotory.findByPlaca(placa),Vehiculo.class);
+		try {
+			vehiculo = modelMapper.map(vehiculoReposotory.findByPlaca(placa),Vehiculo.class);
+		}catch(Exception e){
+			LOG.info(e.getMessage());
+		}
+		return vehiculo;
 	}
 	
 	public void guardarVehiculoEnBD(Vehiculo vehiculo) {

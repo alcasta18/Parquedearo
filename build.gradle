@@ -44,10 +44,6 @@ jar {
   }
 }
 
-repositories {
-  mavenCentral()
-}
-
 test {
   // systemProperties 'property': 'value'
   jacoco {

@@ -1,5 +1,7 @@
 package co.ceiba.servicios;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -22,6 +24,7 @@ public class ParqueaderoNegocio implements IParqueaderoNegocio{
 	public static final int DOMINGO = 1;
 	public static final int LUNES =  2;
 	public static final int CERO = 0;
+	private static final Log LOG = LogFactory.getLog(ParqueaderoNegocio.class);
 	
 	@Autowired
 	private RepositorioParqueadero repositorioParqueadero;
@@ -79,7 +82,13 @@ public class ParqueaderoNegocio implements IParqueaderoNegocio{
 	@Override
 	public Parqueadero obtenerParqueadero(int parqueaderoId) {
 		ModelMapper modelMapper = new ModelMapper();
-		return modelMapper.map(repositorioParqueadero.findOne(parqueaderoId),Parqueadero.class);
+		Parqueadero parqueadero = null;
+		try {
+			parqueadero = modelMapper.map(repositorioParqueadero.findOne(parqueaderoId),Parqueadero.class);
+		}catch(Exception e) {
+			LOG.info(e.getMessage());
+		}
+		return parqueadero;
 	}
 	
 	public void actualizarParqueadero(Parqueadero parqueadero) {

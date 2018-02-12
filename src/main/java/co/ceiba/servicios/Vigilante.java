@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -22,6 +24,8 @@ import co.ceiba.repositorio.RepositorioFactura;
 public class Vigilante implements IVigilante {
 	private ModelMapper modelMapper = new ModelMapper();
 	private CalculadorDeHoras calculadorDeHoras = new CalculadorDeHoras();
+	private static final Log LOG = LogFactory.getLog(Vigilante.class);
+	
 	@Autowired
 	private ParqueaderoNegocio parqueaderoN;
 	@Autowired
@@ -90,11 +94,23 @@ public class Vigilante implements IVigilante {
 
 
 	public Factura buscarFactura(int facturaId) {
-		return modelMapper.map(facturaRepo.findOne(facturaId),Factura.class);
+		Factura factura = null;
+		try {
+			factura  = modelMapper.map(facturaRepo.findOne(facturaId),Factura.class);
+		}catch(Exception e) {
+			LOG.info(e.getMessage());
+		}
+		return factura;
 	}
 	
 	public Date buscarFechaEntradaPorPlaca(String placa) {
-		return facturaRepo.consultarFechaEntrada(placa);
+		Date fecha = null;
+		try {
+			fecha = facturaRepo.consultarFechaEntrada(placa);
+		}catch(Exception e){
+			LOG.info(e.getMessage());
+		}
+		return fecha;
 	}
 
 }

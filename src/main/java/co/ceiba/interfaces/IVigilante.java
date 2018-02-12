@@ -1,6 +1,5 @@
 package co.ceiba.interfaces;
 
-import java.util.Date;
 
 import co.ceiba.dominio.Factura;
 import co.ceiba.servicios.SolicitudEntradaVehiculo;
