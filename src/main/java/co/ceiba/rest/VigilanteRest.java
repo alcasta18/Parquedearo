@@ -12,17 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.ceiba.dominio.Factura;
-import co.ceiba.dominio.Parqueadero;
-import co.ceiba.dominio.Vehiculo;
 import co.ceiba.entity.FacturaEntity;
-import co.ceiba.entity.ParqueaderoEntity;
 import co.ceiba.negocio.SolicitudEntradaVehiculo;
 import co.ceiba.negocio.SolicitudSalidaVehiculo;
 import co.ceiba.negocio.Vigilante;
 
 
 @RestController
-@RequestMapping("/rest/servicios")
+@RequestMapping("/api/servicios")
 @EnableJpaRepositories("co.ceiba.repositorio")
 @Import(FacturaEntity.class)
 

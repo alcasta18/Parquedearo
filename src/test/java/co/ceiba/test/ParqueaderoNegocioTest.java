@@ -5,13 +5,13 @@ import static org.junit.Assert.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import co.ceiba.Main;
 import co.ceiba.dominio.Parqueadero;
-import co.ceiba.interfaces.IParqueaderoNegocio;
 import co.ceiba.negocio.ParqueaderoNegocio;
 
 @RunWith(SpringRunner.class)
@@ -96,93 +96,64 @@ public class ParqueaderoNegocioTest {
 	}
 	
 	@Test
-	public void ingresarVehiculoTest() {
-		//arrange
+	public void actualizarCapacidadAlIngresoDeVehiculoTest() {
 		String tipo = "Carro";
-		//act
-		int resultado = parqueaderoN.ingresarVehiculo(tipo,1,0);
-		//assert
-		assertEquals(0,resultado);
+		int parqueaderoId = 1;
+		parqueaderoN.actualizarCapacidadAlIngresoDeVehiculo(tipo, parqueaderoId);
+		parqueaderoN = Mockito.mock(ParqueaderoNegocio.class);
+		Parqueadero parqueadero2 = new Parqueadero(4,19,0);
+		Mockito.when(parqueaderoN.obtenerParqueadero(parqueaderoId)).thenReturn(parqueadero2);
+		Parqueadero parqueadero = parqueaderoN.obtenerParqueadero(parqueaderoId);
+		assertEquals(19,parqueadero.getCapacidadCarros());
 	}
 	
 	@Test
-	public void ingresarVehiculoTest2() {
-		//arrange
+	public void actualizarCapacidadAlIngresoDeVehiculoTest2() {
 		String tipo = "Moto";
-		//act
-		int resultado = parqueaderoN.ingresarVehiculo(tipo,1,4);
-		//assert
-		assertEquals(3,resultado);
+		int parqueaderoId = 1;
+		parqueaderoN.actualizarCapacidadAlIngresoDeVehiculo(tipo, parqueaderoId);
+		parqueaderoN = Mockito.mock(ParqueaderoNegocio.class);
+		Parqueadero parqueadero2 = new Parqueadero(4,0,9);
+		Mockito.when(parqueaderoN.obtenerParqueadero(parqueaderoId)).thenReturn(parqueadero2);
+		Parqueadero parqueadero = parqueaderoN.obtenerParqueadero(parqueaderoId);
+		assertEquals(9,parqueadero.getCapacidadMotos());
 	}
 	
 	@Test
-	public void noIngresarVehiculoTest() {
-		//arrange
-		String tipo = "Moto";
-		//act
-		int resultado = parqueaderoN.ingresarVehiculo(tipo,1,0);
-		//assert
-		assertEquals(0,resultado);
-	}
-	
-	@Test
-	public void sacarVehiculoTest() {
-		//arrange
-		int precioParqueo = 5000;
+	public void actualizarCapacidadAlSalirVehiculoTest() {
 		String tipo = "Carro";
-		int capacidadCarros = 20;
-		int capacidadMotos = 10;
-		//act
-		int capacidadActualizada = parqueaderoN.sacarVehiculo(tipo, precioParqueo, capacidadCarros, capacidadMotos);
-		//assert
-		assertEquals(19,capacidadActualizada);
+		int parqueaderoId = 1;
+		parqueaderoN.actualizarCapacidadAlSalirUnVehiculo(tipo, parqueaderoId);
+		parqueaderoN = Mockito.mock(ParqueaderoNegocio.class);
+		Parqueadero parqueadero2 = new Parqueadero(4,20,0);
+		Mockito.when(parqueaderoN.obtenerParqueadero(parqueaderoId)).thenReturn(parqueadero2);
+		Parqueadero parqueadero = parqueaderoN.obtenerParqueadero(parqueaderoId);
+		assertEquals(20,parqueadero.getCapacidadCarros());
 	}
 	
-	@Test
-	public void sacarVehiculoTest2() {
-		//arrange
-		int precioParqueo = 0;
-		String tipo = "Carro";
-		int capacidadCarros = 20;
-		int capacidadMotos = 10;
-		//act
-		int capacidadActualizada = parqueaderoN.sacarVehiculo(tipo, precioParqueo, capacidadCarros, capacidadMotos);
-		//assert
-		assertEquals(20,capacidadActualizada);
-	}
+
 	
 	@Test
-	public void sacarVehiculoTest3() {
-		//arrange
-		int precioParqueo = 5000;
+	public void actualizarCapacidadAlSalirVehiculoTest2() {
 		String tipo = "Moto";
-		int capacidadCarros = 20;
-		int capacidadMotos = 10;
-		//act
-		int capacidadActualizada = parqueaderoN.sacarVehiculo(tipo, precioParqueo, capacidadCarros, capacidadMotos);
-		//assert
-		assertEquals(9,capacidadActualizada);
+		int parqueaderoId = 1;
+		parqueaderoN.actualizarCapacidadAlSalirUnVehiculo(tipo, parqueaderoId);
+		parqueaderoN = Mockito.mock(ParqueaderoNegocio.class);
+		Parqueadero parqueadero2 = new Parqueadero(4,1,10);
+		Mockito.when(parqueaderoN.obtenerParqueadero(parqueaderoId)).thenReturn(parqueadero2);
+		Parqueadero parqueadero = parqueaderoN.obtenerParqueadero(parqueaderoId);
+		assertEquals(10,parqueadero.getCapacidadMotos());
 	}
-	
-	@Test
-	public void sacarVehiculoTest4() {
-		//arrange
-		int precioParqueo = 0;
-		String tipo = "Moto";
-		int capacidadCarros = 20;
-		int capacidadMotos = 10;
-		//act
-		int capacidadActualizada = parqueaderoN.sacarVehiculo(tipo, precioParqueo, capacidadCarros, capacidadMotos);
-		//assert
-		assertEquals(10,capacidadActualizada);
-	}
+
 	
 	@Test
 	public void obtenerParqueaderoTest() {
-		Parqueadero parqueadero = parqueaderoN.obtenerParqueadero(1);
-		Parqueadero parqueadero2 = new Parqueadero(1,20,10);
-		assertEquals(parqueadero2.getParqueaderoId(),parqueadero.getParqueaderoId());
+		Parqueadero parqueadero = parqueaderoN.obtenerParqueadero(3);
+		Parqueadero parqueadero2 = new Parqueadero(4,15,0);
 		assertEquals(parqueadero2.getCapacidadCarros(),parqueadero.getCapacidadCarros());
 		assertEquals(parqueadero2.getCapacidadMotos(),parqueadero.getCapacidadMotos());
 	}
+	
 }
+	
+

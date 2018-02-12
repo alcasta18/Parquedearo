@@ -18,7 +18,7 @@ import co.ceiba.entity.ParqueaderoEntity;
 import co.ceiba.negocio.ParqueaderoNegocio;
 
 @RestController
-@RequestMapping("/rest/parqueadero")
+@RequestMapping("/api/parqueadero")
 @EnableJpaRepositories("co.ceiba.repositorio")
 @Import(value = ParqueaderoEntity.class)
 public class ParqueaderoRest {	
@@ -26,21 +26,14 @@ public class ParqueaderoRest {
 	private ParqueaderoNegocio parqueaderoN;
 	
 	
-/*	@PostMapping ("/crear")
-	public void crear(@RequestBody Parqueadero parqueadero) {
-		parqueaderoEntity = modelMapper.map(parqueadero, ParqueaderoEntity.class);
-		repositorioParqueadero.save(parqueaderoEntity);		
-	}*/
-	
-/*	@RequestMapping("/listar")
-	public List<ParqueaderoEntity> consultar() {
-		return repositorioParqueadero.findAll();
-	}*/
-	
-
 	@RequestMapping(value = "consultar/parqueaderoId={parqueaderoId}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public Parqueadero consultar(@PathVariable("parqueaderoId") int parqueaderoId) {
 		return parqueaderoN.obtenerParqueadero(parqueaderoId);
+	}
+	
+	@PostMapping("/actualizar")
+	public void actualizar(@RequestBody Parqueadero parqueadero) {
+		parqueaderoN.actualizarParqueadero(parqueadero);
 	}
 	
 	

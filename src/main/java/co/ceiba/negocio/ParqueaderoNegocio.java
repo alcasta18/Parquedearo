@@ -3,10 +3,10 @@ package co.ceiba.negocio;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import co.ceiba.dominio.Parqueadero;
+import co.ceiba.entity.ParqueaderoEntity;
 import co.ceiba.interfaces.IParqueaderoNegocio;
 import co.ceiba.repositorio.RepositorioParqueadero;
 
@@ -28,63 +28,62 @@ public class ParqueaderoNegocio implements IParqueaderoNegocio{
 	
 	@Override
 	public boolean vehiculoPuedeEntrar(String placa ,int dia) {
-		boolean mensaje= true;
+		boolean carroEntra= true;
 		if((placa.charAt(0)==AMAYUS)||(placa.charAt(0)==AMINUS)){
 			if((dia == DOMINGO)||(dia == LUNES)) {
-				mensaje = true;
+				carroEntra = true;
 			}
 			else {
-				mensaje = false;
+				carroEntra = false;
 			}
 		}
 		else {
-			mensaje = true;
+			carroEntra = true;
 		}		
-		return mensaje;
+		return carroEntra;
 	}
 	
 	@Override
 	public boolean hayCupo(String tipo,int capacidadCarros,int capacidadMotos) {
-		boolean vacio = true;
+		boolean carroEntra = true;
 		if(tipo.equals(CARRO)&&(capacidadCarros == CERO)) 
-			vacio = false;
+			carroEntra = false;
 		if(tipo.equals(MOTO)&&(capacidadMotos == CERO)) 
-			vacio = false;
+			carroEntra = false;
 
-		return vacio;
+		return carroEntra;
 	}
 	
-	@Override
-	public int ingresarVehiculo(String tipo,int capacidadCarros,int capacidadMotos) {
-		if(hayCupo(tipo,capacidadCarros,capacidadMotos)) {
+	public void actualizarCapacidadAlIngresoDeVehiculo(String tipo, int parqueaderoId) {
+		Parqueadero parqueadero = obtenerParqueadero(parqueaderoId);
+		if(hayCupo(tipo,parqueadero.getCapacidadCarros(),parqueadero.getCapacidadMotos())) {
 			if(tipo.equals(CARRO))
-				return capacidadCarros-1;
-			else
-				return capacidadMotos-1;
+				parqueadero.setCapacidadCarros(parqueadero.getCapacidadCarros()-1);
+			else if(tipo.equals(MOTO))
+				parqueadero.setCapacidadMotos(parqueadero.getCapacidadMotos()-1);
 		}
-		else {
-			return 0;
-		}
+		actualizarParqueadero(parqueadero);
 	}
-
-	@Override
-	public int sacarVehiculo(String tipo,int precioParqueo,int capacidadCarros,int capacidadMotos) {
-		if(precioParqueo != 0)
-			if(tipo.equals(CARRO))
-				return capacidadCarros-1;
-			else
-				return capacidadMotos-1;
-		else {
-			if(tipo.equals(CARRO))
-				return capacidadCarros;
-			else
-				return capacidadMotos;
-		}
+	
+	public void actualizarCapacidadAlSalirUnVehiculo(String tipo, int parqueaderoId) {
+		Parqueadero parqueadero = obtenerParqueadero(parqueaderoId);
+		if(tipo.equals(CARRO))
+			parqueadero.setCapacidadCarros(parqueadero.getCapacidadCarros()+1);
+		else if(tipo.equals(MOTO))
+			parqueadero.setCapacidadMotos(parqueadero.getCapacidadMotos()+1);
+		actualizarParqueadero(parqueadero);
+		
 	}
+	
 	
 	@Override
 	public Parqueadero obtenerParqueadero(int parqueaderoId) {
 		ModelMapper modelMapper = new ModelMapper();
 		return modelMapper.map(repositorioParqueadero.findOne(parqueaderoId),Parqueadero.class);
+	}
+	
+	public void actualizarParqueadero(Parqueadero parqueadero) {
+		ModelMapper modelMapper = new ModelMapper();
+		repositorioParqueadero.save(modelMapper.map(parqueadero,ParqueaderoEntity.class));
 	}
 }

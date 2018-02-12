@@ -2,22 +2,12 @@ package co.ceiba.test;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.Serializable;
-import java.util.List;
+
 
 import org.junit.Test;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 
-import co.ceiba.dominio.Vehiculo;
-import co.ceiba.entity.VehiculoEntity;
 import co.ceiba.interfaces.IVehiculoNegocio;
 import co.ceiba.negocio.VehiculoNegocio;
-import co.ceiba.repositorio.RepositorioVehiculo;
 
 
 public class VehiculoNegocioTest {

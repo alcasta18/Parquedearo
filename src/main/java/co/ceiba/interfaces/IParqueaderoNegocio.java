@@ -7,9 +7,9 @@ public interface IParqueaderoNegocio {
 	
 	public boolean hayCupo(String tipo,int capacidadCarros,int capacidadMotos);
 	
-	public int ingresarVehiculo(String tipo,int capacidadCarros,int capacidadMotos);
+	public void actualizarCapacidadAlIngresoDeVehiculo(String tipo, int parqueaderoId);
 	
-	public int sacarVehiculo(String tipo,int precioParqueo,int capacidadCarros,int capacidadMotos);
-	
+	public void actualizarCapacidadAlSalirUnVehiculo(String tipo, int parqueaderoId);
+
 	public Parqueadero obtenerParqueadero(int parqueaderoId);
 }

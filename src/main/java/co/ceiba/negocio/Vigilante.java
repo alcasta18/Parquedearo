@@ -1,12 +1,10 @@
 package co.ceiba.negocio;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Service;
 
@@ -36,12 +34,11 @@ public class Vigilante implements IVigilante {
 		Vehiculo vehiculo = vehiculoN.obtenerVehiculo(solicitud.getPlaca());
 		Factura factura = new Factura();
 		
-		int dia = buscarDia(null);
+		int dia = java.util.Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
 
 		validarIngreso(parqueadero, parqueaderoN, vehiculo, dia);
 
-		parqueaderoN.ingresarVehiculo(vehiculo.getTipo(), parqueadero.getCapacidadCarros(),
-				parqueadero.getCapacidadMotos());
+		parqueaderoN.actualizarCapacidadAlIngresoDeVehiculo(vehiculo.getTipo(), solicitud.getParqueaderoId());
 
 		crearFactura(vehiculo, factura);
 		return factura;
@@ -73,6 +70,7 @@ public class Vigilante implements IVigilante {
 		Vehiculo vehiculo = vehiculoN.obtenerVehiculo(factura.getPlaca());
 		Calendar calendario = new GregorianCalendar();
 		
+		parqueaderoN.actualizarCapacidadAlSalirUnVehiculo(vehiculo.getTipo(), solicitud.getParqueaderoId());
 		setFactura(factura, parqueadero, vehiculo, calendario);
 		
 		facturaRepo.save(modelMapper.map(factura, FacturaEntity.class));
@@ -86,20 +84,10 @@ public class Vigilante implements IVigilante {
 		factura.setTotal(vehiculoN.calcularPrecio(
 				calculadorDeHoras.diferenciaDeHorasConCalendar(factura.getFechaEntrada(), factura.getFechaSalida()),
 				vehiculo.getCilindraje(), vehiculo.getTipo()));
-		parqueaderoN.sacarVehiculo(vehiculo.getTipo(), factura.getTotal(), parqueadero.getCapacidadCarros(),
-				parqueadero.getCapacidadMotos());
+		parqueaderoN.actualizarCapacidadAlSalirUnVehiculo(vehiculo.getTipo(), parqueadero.getParqueaderoId());
 	}
 
-	@Override
-	public int buscarDia(Date fechaEntrada) {
-		if (fechaEntrada == null)
-			return java.util.Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-		else {
-			Calendar calendario = new GregorianCalendar();
-			calendario.setTime(fechaEntrada);
-			return calendario.get(Calendar.DAY_OF_WEEK);
-		}
-	}
+
 
 
 	public Factura buscarFactura(int facturaId) {

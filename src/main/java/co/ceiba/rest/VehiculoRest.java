@@ -12,7 +12,7 @@ import co.ceiba.dominio.Vehiculo;
 import co.ceiba.negocio.VehiculoNegocio;
 
 @RestController
-@RequestMapping("/rest/vehiculo")
+@RequestMapping("/api/vehiculo")
 public class VehiculoRest {
 	
 	@Autowired

@@ -13,17 +13,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import co.ceiba.Main;
-import co.ceiba.dominio.Factura;
 import co.ceiba.negocio.CalculadorDeHoras;
-import co.ceiba.negocio.Vigilante;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes=Main.class)
 public class CalculadorDeHorasTest {
 	@Autowired
 	private CalculadorDeHoras calculadorDeHoras;
-	@Autowired
-	private Vigilante vigilante;
+
 	
 	@Test
 	public void minutosHoraEntradaAEntero() {
