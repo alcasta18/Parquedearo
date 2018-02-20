@@ -1,10 +1,6 @@
 package co.ceiba.test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import co.ceiba.Main;
-import co.ceiba.dominio.ReporteEntradaDeVehiculo;
-import co.ceiba.interfaces.IVehiculoNegocio;
+import co.ceiba.parqueadero.Main;
+import co.ceiba.parqueadero.dominio.servicios.CalcularTiempoParqueadero;
+import co.ceiba.parqueadero.interfaces.IVehiculoNegocio;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes=Main.class)
@@ -30,7 +26,7 @@ public class VehiculoNegocioTest {
 		int cilindraje = 650;
 		String tipo = "Moto";
 		//act
-		int totalMoto = vehiculo.calcularPrecio(numHoras,cilindraje,tipo);
+		int totalMoto = vehiculo.calcularPrecio(new CalcularTiempoParqueadero(numHoras, cilindraje, tipo));
 		//assert
 		assertEquals(6000, totalMoto);
 	}
@@ -42,7 +38,7 @@ public class VehiculoNegocioTest {
 		int cilindraje = 650;
 		String tipo = "Moto";		
 		//act
-		int totalMoto = vehiculo.calcularPrecio(numHoras,cilindraje,tipo);
+		int totalMoto = vehiculo.calcularPrecio(new CalcularTiempoParqueadero(numHoras, cilindraje, tipo));
 		//assert
 		assertEquals(10000, totalMoto);
 	}
@@ -54,7 +50,7 @@ public class VehiculoNegocioTest {
 		int cilindraje = 150;
 		String tipo = "Carro";
 		//act
-		int totalMoto = vehiculo.calcularPrecio(numHoras,cilindraje,tipo);
+		int totalMoto = vehiculo.calcularPrecio(new CalcularTiempoParqueadero(numHoras, cilindraje, tipo));
 		//assert
 		assertEquals(16000, totalMoto);
 	}
@@ -66,7 +62,7 @@ public class VehiculoNegocioTest {
 		int cilindraje = 150;
 		String tipo = "Carro";
 		//act
-		int totalMoto = vehiculo.calcularPrecio(numHoras,cilindraje,tipo);
+		int totalMoto = vehiculo.calcularPrecio(new CalcularTiempoParqueadero(numHoras, cilindraje, tipo));
 		//assert
 		assertEquals(9000, totalMoto);
 	}
@@ -78,20 +74,8 @@ public class VehiculoNegocioTest {
 		int cilindraje = 150;
 		String tipo = "Moto";
 		//act
-		int totalMoto = vehiculo.calcularPrecio(numHoras,cilindraje,tipo);
+		int totalMoto = vehiculo.calcularPrecio(new CalcularTiempoParqueadero(numHoras, cilindraje, tipo));
 		//assert
 		assertEquals(2500, totalMoto);
-	}
-	
-	@Test
-	public void reporteTest() {
-		String placa = "LRA60C";
-		Calendar calendario = new GregorianCalendar();
-		calendario.set(2018, 01, 12, 10, 28, 05);
-		ReporteEntradaDeVehiculo reporteEsperado = new ReporteEntradaDeVehiculo(placa,"Moto",calendario.getTime());
-		ReporteEntradaDeVehiculo reporte = vehiculo.reporte(placa);
-		assertEquals(reporteEsperado.getPlaca(),reporte.getPlaca());
-		assertEquals(reporteEsperado.getTipo(),reporte.getTipo());
-		assertNotNull(reporte.getFechaEntrada());
-	}
+	}	
 }
