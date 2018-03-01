@@ -50,12 +50,12 @@ public class ParqueaderoNegocioTest {
 	public void actualizarCapacidadAlSalirVehiculoTest() {
 		String tipo = "Carro";
 		int parqueaderoId = 3;
-		parqueaderoN.actualizarCapacidadAlSalirUnVehiculo(tipo, parqueaderoId);
-		parqueaderoN = Mockito.mock(ParqueaderoNegocio.class);
 		Parqueadero parqueadero2 = new Parqueadero(4,18,0);
+		parqueaderoN.actualizarCapacidadAlSalirUnVehiculo(tipo, parqueadero2);
+		parqueaderoN = Mockito.mock(ParqueaderoNegocio.class);
 		Mockito.when(parqueaderoN.obtenerParqueadero(parqueaderoId)).thenReturn(parqueadero2);
 		Parqueadero parqueadero = parqueaderoN.obtenerParqueadero(parqueaderoId);
-		assertEquals(18,parqueadero.getCapacidadCarros());
+		assertEquals(19,parqueadero.getCapacidadCarros());
 	}
 	
 
@@ -64,12 +64,12 @@ public class ParqueaderoNegocioTest {
 	public void actualizarCapacidadAlSalirVehiculoTest2() {
 		String tipo = "Moto";
 		int parqueaderoId = 1;
-		parqueaderoN.actualizarCapacidadAlSalirUnVehiculo(tipo, parqueaderoId);
+		Parqueadero parqueadero2 = new Parqueadero(4,18,0);
+		parqueaderoN.actualizarCapacidadAlSalirUnVehiculo(tipo, parqueadero2);
 		parqueaderoN = Mockito.mock(ParqueaderoNegocio.class);
-		Parqueadero parqueadero2 = new Parqueadero(4,1,7);
 		Mockito.when(parqueaderoN.obtenerParqueadero(parqueaderoId)).thenReturn(parqueadero2);
 		Parqueadero parqueadero = parqueaderoN.obtenerParqueadero(parqueaderoId);
-		assertEquals(7,parqueadero.getCapacidadMotos());
+		assertEquals(1,parqueadero.getCapacidadMotos());
 	}
 
 	

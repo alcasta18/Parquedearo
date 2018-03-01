@@ -1,9 +1,9 @@
 package co.ceiba.parqueadero.dominio.servicios;
 
 public class CalcularTiempoParqueadero {
-	public int numHoras;
-	public int cilindraje;
-	public String tipo;
+	private int numHoras;
+	private int cilindraje;
+	private String tipo;
 	private int dias;
 
 	public CalcularTiempoParqueadero(int numHoras, int cilindraje, String tipo) {
@@ -12,6 +12,26 @@ public class CalcularTiempoParqueadero {
 		this.tipo = tipo;
 		this.dias = 0;
 	}
+	
+	
+
+	public int getNumHoras() {
+		return numHoras;
+	}
+
+
+
+	public int getCilindraje() {
+		return cilindraje;
+	}
+
+
+
+	public String getTipo() {
+		return tipo;
+	}
+
+
 
 	public int getDias() {
 		return dias;

@@ -12,6 +12,7 @@ import co.ceiba.parqueadero.Main;
 import co.ceiba.parqueadero.dominio.servicios.CalcularTiempoParqueadero;
 import co.ceiba.parqueadero.interfaces.IVehiculoNegocio;
 
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes=Main.class)
 public class VehiculoNegocioTest {

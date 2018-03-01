@@ -26,7 +26,7 @@ public class GeneradorDeReportesMapper {
 		List<FacturaEntity> facturas = facturaRepo.findAll();
 		for(FacturaEntity facturaE : facturas) {
 			Factura factura = modelMapper.map(facturaE, Factura.class);
-			if(factura.getTotal()==0) {
+			if(factura.getHoraSalida().equals("")) {
 				VehiculoEntity vehiculo = vehiculoRepo.findByPlaca(factura.getPlaca());
 				ReporteEntradaDeVehiculo reporte = new ReporteEntradaDeVehiculo(vehiculo.getPlaca(), 
 						vehiculo.getTipo(), factura.getFechaEntrada());

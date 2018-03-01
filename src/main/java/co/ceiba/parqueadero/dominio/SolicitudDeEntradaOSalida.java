@@ -1,16 +1,16 @@
 package co.ceiba.parqueadero.dominio;
 
-public class SolicitudEntradaVehiculo {
+public class SolicitudDeEntradaOSalida {
 	private int parqueaderoId;
 	private String placa;
 		
 	
 	
-	public SolicitudEntradaVehiculo() {
+	public SolicitudDeEntradaOSalida() {
 		super();
 	}
 
-	public SolicitudEntradaVehiculo(int parqueaderoId, String placa) {
+	public SolicitudDeEntradaOSalida(int parqueaderoId, String placa) {
 		super();
 		this.parqueaderoId = parqueaderoId;
 		this.placa = placa;

@@ -4,7 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import co.ceiba.parqueadero.dominio.Parqueadero;
 import co.ceiba.parqueadero.interfaces.IParqueaderoNegocio;
@@ -38,8 +37,7 @@ public class ParqueaderoNegocio implements IParqueaderoNegocio{
 		actualizarParqueadero(parqueadero);
 	}
 	
-	public void actualizarCapacidadAlSalirUnVehiculo(String tipo, int parqueaderoId) {
-		Parqueadero parqueadero = obtenerParqueadero(parqueaderoId);
+	public void actualizarCapacidadAlSalirUnVehiculo(String tipo, Parqueadero parqueadero) {		
 		if(tipo.equals(CARRO))
 			parqueadero.setCapacidadCarros(parqueadero.getCapacidadCarros()+1);
 		else if(tipo.equals(MOTO))
@@ -50,7 +48,6 @@ public class ParqueaderoNegocio implements IParqueaderoNegocio{
 	
 	
 	@Override
-	@Transactional
 	public Parqueadero obtenerParqueadero(int parqueaderoId) {
 		Parqueadero parqueadero = null;
 		try {
@@ -61,7 +58,7 @@ public class ParqueaderoNegocio implements IParqueaderoNegocio{
 		return parqueadero;
 	}
 	
-	@Transactional
+	
 	public void actualizarParqueadero(Parqueadero parqueadero) {
 		repositorioParqueaderoMapper.actualizarParqueadero(parqueadero);
 	}
